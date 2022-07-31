@@ -3,8 +3,8 @@
 block_cipher = None
 
 a = Analysis(
-    ['stream-tool.py'],
-    pathex=[],
+    ['main.py'],
+    pathex=['/src'],
     binaries=[],
     datas=[],
     hiddenimports=[],

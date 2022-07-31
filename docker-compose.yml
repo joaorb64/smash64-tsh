@@ -7,6 +7,6 @@ services:
   stream-tool-poc:
     image: smash64-dev/pyinstaller-windows
     volumes:
-      - ./src/:/src:Z
+      - ./src:/src:Z
     depends_on:
       - pyinstaller-windows

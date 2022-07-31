@@ -1,1 +1,6 @@
-pyinstaller
+configparser
+psutil
+
+# ReadWriteMemory
+# pinned version of master, needed for get_modules and better functions
+https://github.com/vsantiago113/ReadWriteMemory/archive/d0de9f9cd19aca5d908b2caee04934f11208937e.zip
