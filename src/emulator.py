@@ -10,6 +10,7 @@ class Emulator():
         self.offsets = {}
         self.proc = None
         self.exe = None
+        self.rom_id = None
 
     def decode_name(self, data: bytes):
         # TODO: handle omega and music note
@@ -29,7 +30,7 @@ class Emulator():
 
     def get_tag_base(self, index: int = 0):
         base = int.from_bytes(self.get_emu_base(), 'little')
-        tag_offset = int(self.process_config['tags'], 0)
+        tag_offset = int(self.supported_config[self.rom_id]['tags'], 0)
         index_offset = 60 * index
         ptr = self.proc.get_pointer(base + tag_offset + index_offset)
         return ptr
@@ -59,9 +60,12 @@ class Emulator():
         return bytes([int(byte, 0) for byte in raw_bytes])
 
     def read_name(self, index: int):
-        ptr = self.get_tag_base(index)
-        raw_bytes = self.proc.readByte(ptr, 20)
-        return self.decode_name(raw_bytes)
+        if self.rom_id is not None:
+            ptr = self.get_tag_base(index)
+            raw_bytes = self.proc.readByte(ptr, 20)
+            return self.decode_name(raw_bytes)
+        else:
+            return None
 
     def read_rom_crc(self, offset: int):
         ptr = self.proc.get_pointer(self.exe + int(offset, 0))
@@ -73,7 +77,12 @@ class Emulator():
         if self.process_is_running():
             self.crc1 = self.read_rom_crc(self.process_config['crc1'])
             self.crc2 = self.read_rom_crc(self.process_config['crc2'])
-            return f"{self.crc1}-{self.crc2}" in self.supported_config
+            rom_crcs = f"{self.crc1}-{self.crc2}"
+
+            if rom_crcs in self.supported_config:
+                self.rom_id = rom_crcs
+
+            return rom_crcs in self.supported_config
         else:
             return False
 
@@ -86,5 +95,6 @@ class Emulator():
         return bytes(swapped)
 
     def write_name(self, index: int, data: list):
-        ptr = self.get_tag_base(index)
-        self.proc.writeByte(ptr, bytes(self.encode_name(data)))
+        if self.rom_id is not None:
+            ptr = self.get_tag_base(index)
+            self.proc.writeByte(ptr, bytes(self.encode_name(data)))

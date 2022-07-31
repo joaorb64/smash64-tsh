@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import configparser
-import datetime
 import os
 import re
 import sys
@@ -18,12 +17,15 @@ def poll_emulator(app: App, emu: Emulator):
             app.set_field('Emulator', f"Found. {process_info}")
 
             if emu.rom_is_valid():
-                supported = 'Supported.'
+                supported = 'Supported'
+                try:
+                    rom_name = emu.supported_config[emu.rom_id]['name']
+                except Exception as e:
+                    rom_name = f"{emu.crc1}-{emu.crc2}"
             else:
-                supported = 'Not supported.'
-
-            rom_crcs = f"{emu.crc1}-{emu.crc2}"
-            app.set_field('Game ROM', f"{supported}. \"{rom_crcs}\"")
+                supported = 'Not supported'
+                rom_name = f"{emu.crc1}-{emu.crc2}"
+            app.set_field('Game ROM', f"{supported}. \"{rom_name}\"")
         else:
             app.set_field('Emulator', 'Not Found.')
             app.set_field('Game ROM', f'Not Found.')
