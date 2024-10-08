@@ -36,7 +36,7 @@ jobs:
           powershell Compress-Archive -Path smash64-tsh/* -DestinationPath smash64-tsh.zip
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: smash64-tsh
           path: smash64-tsh.zip
