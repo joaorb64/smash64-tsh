@@ -1,0 +1,88 @@
+process:
+  name: "Project64KSE.exe"
+  crc1: 0x90E50
+  crc2: 0x90E54
+  base: 0x9262C
+
+# You can find this as "Sonic.classic_table" in Remix build's output.log
+sonic_classic_table_address: 0x80553A10
+
+# Maps character IDs (int) to TSH character names
+id_to_character:
+  0: "Mario"
+  1: "Fox"
+  2: "Donkey Kong"
+  3: "Samus"
+  4: "Luigi"
+  5: "Link"
+  6: "Yoshi"
+  7: "Captain Falcon"
+  8: "Kirby"
+  9: "Pikachu"
+  10: "Jigglypuff"
+  11: "Ness"
+  12: "boss"
+  13: "Metal Mario"
+  14: "nmario"
+  15: "nfox"
+  16: "ndonkey"
+  17: "nsamus"
+  18: "nluigi"
+  19: "nlink"
+  20: "nyoshi"
+  21: "ncaptain"
+  22: "nkirby"
+  23: "npikachu"
+  24: "npuff"
+  25: "nness"
+  26: "gdonkey"
+  27: "placeholder"
+  28: "none"
+  29: "Falco"
+  30: "Ganondorf"
+  31: "Young Link"
+  32: "Dr. Mario"
+  33: "Wario"
+  34: "Dark Samus"
+  35: "Link" # ELINK
+  36: "Samus" # JSAMUS
+  37: "Ness" # JNESS
+  38: "Lucas"
+  39: "Link" # JLINK
+  40: "Captain Falcon" # JFALCON
+  41: "Fox" # JFOX
+  42: "Mario" # JMARIO
+  43: "Luigi" # JLUIGI
+  44: "Donkey Kong" # JDK
+  45: "Pikachu" # EPIKA
+  46: "Jigglypuff" # JPUFF
+  47: "Jigglypuff" # EPUFF
+  48: "Kirby" # JKIRBY
+  49: "Yoshi" # JYOSHI
+  50: "Pikachu" # JPIKA
+  51: "Samus" # ESAMUS
+  52: "Bowser"
+  53: "Giga Bowser"
+  54: "Mad Piano"
+  55: "Wolf"
+  56: "Conker"
+  57: "Mewtwo"
+  58: "Marth"
+  59: "Sonic"
+  60: "Sandbag"
+  61: "Super Sonic"
+  62: "Sheik"
+  63: "Marina"
+  64: "Dedede"
+  65: "Goemon"
+  66: "Peppy"
+  67: "Slippy"
+  68: "Banjo & Kazooie"
+  69: "Metal Luigi"
+  70: "Ebisumaru"
+  71: "Dragon King"
+
+game_screen:
+  0x16: VS_BATTLE
+  0x18: RESULTS
+  0x36: TRAINING_MODE

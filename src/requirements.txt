@@ -1,5 +1,6 @@
-configparser
+pyyaml
 psutil
+requests
 
 # ReadWriteMemory
 # pinned version of master, needed for get_modules and better functions

@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+configparser = "*"
+psutil = "*"
+readwritememory = {file = "https://github.com/vsantiago113/ReadWriteMemory/archive/d0de9f9cd19aca5d908b2caee04934f11208937e.zip"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"

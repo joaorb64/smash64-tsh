@@ -4,9 +4,8 @@ from ReadWriteMemory import ReadWriteMemory
 
 
 class Emulator():
-    def __init__(self, process_config, supported_config):
+    def __init__(self, process_config):
         self.process_config = process_config
-        self.supported_config = supported_config
         self.offsets = {}
         self.proc = None
         self.exe = None
@@ -23,17 +22,10 @@ class Emulator():
         return self.swap_bytes([hex(c) for c in buffer], 4)
 
     def get_emu_base(self):
-        offset = int(self.process_config['base'], 0)
+        offset = self.process_config['base']
         base = self.proc.get_pointer(self.exe + offset)
         addr = self.proc.readByte(base, 4)
         return bytes([int(byte, 0) for byte in addr])
-
-    def get_tag_base(self, index: int = 0):
-        base = int.from_bytes(self.get_emu_base(), 'little')
-        tag_offset = int(self.supported_config[self.rom_id]['tags'], 0)
-        index_offset = 60 * index
-        ptr = self.proc.get_pointer(base + tag_offset + index_offset)
-        return ptr
 
     def process_is_running(self):
         if self.proc is not None and psutil.pid_exists(self.proc.pid):
@@ -59,6 +51,13 @@ class Emulator():
         raw_bytes = self.proc.readByte(ptr, size)
         return bytes([int(byte, 0) for byte in raw_bytes])
 
+    def read_game_bytes(self, offset: int, size: int = 1):
+        base = int.from_bytes(self.get_emu_base(), 'little')
+        offset -= 0x80000000
+        ptr = self.proc.get_pointer(base + offset)
+        raw_bytes = self.proc.readByte(ptr, size)
+        return bytes([int(byte, 0) for byte in raw_bytes])
+
     def read_name(self, index: int):
         if self.rom_id is not None:
             ptr = self.get_tag_base(index)
@@ -68,7 +67,7 @@ class Emulator():
             return None
 
     def read_rom_crc(self, offset: int):
-        ptr = self.proc.get_pointer(self.exe + int(offset, 0))
+        ptr = self.proc.get_pointer(self.exe + offset)
         raw_bytes = self.proc.readByte(ptr, 4)
         value = bytes([int(byte, 0) for byte in raw_bytes])
         return f"{int.from_bytes(value, 'little'):x}".upper()
@@ -79,10 +78,7 @@ class Emulator():
             self.crc2 = self.read_rom_crc(self.process_config['crc2'])
             rom_crcs = f"{self.crc1}-{self.crc2}"
 
-            if rom_crcs in self.supported_config:
-                self.rom_id = rom_crcs
-
-            return rom_crcs in self.supported_config
+            return True
         else:
             return False
 
