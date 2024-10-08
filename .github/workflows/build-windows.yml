@@ -26,14 +26,14 @@ jobs:
         run: python -m pip install -r src/requirements.txt
 
       - name: Build executable
-        run: pyinstaller run.py --onefile -w
+        run: pyinstaller run.py # --onefile -w
 
       - name: Zip executable and config file
         run: |
           mkdir smash64-tsh
           cp dist/run.exe smash64-tsh/
           cp src/config.yml smash64-tsh/
-          powershell Compress-Archive -Path smash64-tsh/* -DestinationPath smash64-tsh.zip
+          powershell Compress-Archive -Path smash64-tsh/ -DestinationPath smash64-tsh.zip
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
