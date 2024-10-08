@@ -106,7 +106,7 @@ def poll_emulator(app: App, emu: Emulator):
                             }
 
                             response = requests.post(
-                                f"http://127.0.0.1:5000/scoreboard{0}-update-team-{t-1}-{0}", json=json_data)
+                                f"http://127.0.0.1:5000/scoreboard{0}-update-team-{t-1}-{0}", json=json_data, timeout=0.02)
 
                             if response.status_code == 200:
                                 print("Data posted successfully")
@@ -119,10 +119,10 @@ def poll_emulator(app: App, emu: Emulator):
                 if prev_game_data.get("screen") != "RESULTS" and gameData.get("screen") == "RESULTS":
                     if gameData["slots"][0]["placement"] == 0:
                         requests.get(
-                            f"http://127.0.0.1:5000/scoreboard{0}-team{1}-scoreup")
+                            f"http://127.0.0.1:5000/scoreboard{0}-team{1}-scoreup", timeout=0.02)
                     elif gameData["slots"][1]["placement"] == 0:
                         requests.get(
-                            f"http://127.0.0.1:5000/scoreboard{0}-team{2}-scoreup")
+                            f"http://127.0.0.1:5000/scoreboard{0}-team{2}-scoreup", timeout=0.02)
             except Exception as e:
                 print(traceback.format_exc())
         else:
@@ -143,7 +143,8 @@ def poll_emulator(app: App, emu: Emulator):
 
 def poll_tsh(app: App, emu: Emulator):
     try:
-        resp = requests.get("http://127.0.0.1:5000/program-state")
+        resp = requests.get(
+            "http://127.0.0.1:5000/program-state", timeout=0.02)
         app.set_field("TSH", "Detected")
     except Exception as e:
         app.set_field("TSH", "Not detected")
