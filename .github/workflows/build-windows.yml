@@ -33,10 +33,10 @@ jobs:
           mkdir smash64-tsh
           cp dist/* smash64-tsh/
           cp src/config.yml smash64-tsh/
-          powershell Compress-Archive -Path smash64-tsh/ -DestinationPath smash64-tsh.zip
+          powershell Compress-Archive -Path smash64-tsh/* -DestinationPath smash64-tsh.zip
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: smash64-tsh
-          path: smash64-tsh.zip
+          name: build
+          path: build.zip
