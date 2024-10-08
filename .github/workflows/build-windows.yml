@@ -31,7 +31,7 @@ jobs:
       - name: Zip executable and config file
         run: |
           mkdir smash64-tsh
-          cp dist/run.exe smash64-tsh/
+          cp dist/* smash64-tsh/
           cp src/config.yml smash64-tsh/
           powershell Compress-Archive -Path smash64-tsh/ -DestinationPath smash64-tsh.zip
 
